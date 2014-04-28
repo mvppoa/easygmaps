@@ -13,8 +13,18 @@
      * @name     easygmaps
      * @param    config      { decimal : "." , negative : true }
      * @author   Marcelo Fachinelli (http://www.codigosecafe.wordpress.com)
-     * @example  $("#egwgmaps").();  
+     * @example  $("#easygmaps").easygmaps();  
+     * @example  $("#easygmaps").easygmaps({marker:{latitude:1,longitude:-1}});  
+     * @example  $("#easygmaps").easygmaps({marker:"Julio de Castilhos 432 Centro Porto Alegre RS Brasil"});  
+     * @example  $("#easygmaps").easygmaps({marker:[{latitude:1,longitude:-2},{latitude:1,longitude:-1},{latitude:1,longitude:0}]});  
+     * @example  $("#easygmaps").easygmaps({marker:["Julio de Castilhos 432 Centro Porto Alegre RS Brasil","Av. Ipiranga 6681 Floresta Porto Alegre RS Brasil"]});  
+     * @example  $("#easygmaps").easygmaps({marker:{latitude:1,longitude:-1},icon:"iconpath.png"});  
+     * @example  $("#easygmaps").easygmaps({marker:"Julio de Castilhos 432 Centro Porto Alegre RS Brasil",icon:"iconpath.png"});  
+     * @example  $("#easygmaps").easygmaps({marker:[{latitude:1,longitude:-2},{latitude:1,longitude:-1},{latitude:1,longitude:0}],icon:"iconpath.png"});  
+     * @example  $("#easygmaps").easygmaps({marker:["Julio de Castilhos 432 Centro Porto Alegre RS Brasil","Av. Ipiranga 6681 Floresta Porto Alegre RS Brasil"],icon:"iconpath.png"});  
      * @Bugs In the moment the script will only work with 1 div. The id save for the address find must be refined.
+     * @Bugs A little more work must be made to work it the addresses. They are being called in the ajax function inside the addMarker function and then it calls
+     *       addMarker again. It should be optimized.
      *       Also the icon must be optimized since it cannot discriminate which resource is equivalent to a value displayed in the application.
      */
     
@@ -52,6 +62,16 @@
     };
 
 
+    /**
+     * Funciton to add a position to the map. It will get the position with the latitude and longitude or the address and it will add them in the current map,
+     * calculating the distance between them and showing both in the map, regardless of its original zoom.
+     * @example  $("#easygmaps").easygmaps().addMarker({latitude:1,longitude:-1});  
+     * @example  $("#easygmaps").easygmaps().addMarker("Julio de Castilhos 432 Centro Porto Alegre RS Brasil");  
+     * @example  $("#easygmaps").easygmaps().addMarker([{latitude:1,longitude:-2},{latitude:1,longitude:-1},{latitude:1,longitude:0}]);  
+     * @example  $("#easygmaps").easygmaps().addMarker(["Julio de Castilhos 432 Centro Porto Alegre RS Brasil","Av. Ipiranga 6681 Floresta Porto Alegre RS Brasil"]);  
+     * @param {Object} markers Variables to be inserted. They may be coordinates or the address, in an array or not. See the exampes above
+     * @returns {Boolean} True for map insertion and false for failure.
+     */
     $.fn.easygmaps.addMarker = function(markers) {
 
         var currentMap = this.data("map");
